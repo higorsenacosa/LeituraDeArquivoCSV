@@ -63,13 +63,14 @@ namespace LeituraDeArquivoCSV
             
         }
         /// <summary>
-        /// 
+        /// Criando o método que pode ser modificado pelos filhos da classe Manipulação de Arquivo
         /// </summary>
         protected virtual void salvarArquivo() { }
+
         /// <summary>
-        /// 
+        /// Método original para salvamento de arquivo
         /// </summary>
-        /// <param name="txt"></param>
+        /// <param name="txt">Texto a ser salvo no arquivo</param>
         protected virtual void salvarArquivo(string txt) {
             //Definição do arquivo a ser salvo
             salvamento.Filter = "Arquivo CSV (*.csv)|*.csv";

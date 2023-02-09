@@ -13,15 +13,20 @@ namespace LeituraDeArquivoCSV
 {
     public partial class MainForm : Form
     {
+        //Criando minhas propridades para manipular por todo o Código
         GerenciandoBD BD;
         Log log = new Log();
         public MainForm()
         {
+            
+            //Colocando minhas configurações iniciais do sistema
             InitializeComponent();
             limparControles();
             log.log(0, "Criação dos elementos visuais");
+            
+            //Obtendo minha base fixa
             try
-            {
+            {               
                 BD = new GerenciandoBD("C:\\Users\\higor.vmorais\\Documents\\tabela_de_higor.csv");
                 lboPessoas.Items.Clear();
                 lboPessoas.Items.AddRange(BD.leituraBaseComCaminho());
@@ -35,7 +40,9 @@ namespace LeituraDeArquivoCSV
                 log.log(2, "Não foi possivel obter dados de uma base fixa");
             }
         }
-
+        /// <summary>
+        /// Setando a configuração padrão dos meus itens do WindowsForms
+        /// </summary>
         private void limparControles()
         {
             btnRemover.Visible = false;
@@ -87,11 +94,13 @@ namespace LeituraDeArquivoCSV
                 }
             }
         }
+        
         /// <summary>
-        ///  Com vcs
+        ///  Adição de itens em meu listbox e cancelar seleção no listbox
         /// </summary>
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            //Evento de adição no ListBox
             if (btnAdd.Text == "Adicionar")
             {
                 //Criando meus campos para pessoa
@@ -110,6 +119,7 @@ namespace LeituraDeArquivoCSV
                 //Limpar os controles
                 limparControles();
             }
+            //Evento de cancelamento do listBox
             else
             {
                 lboPessoas.ClearSelected();
@@ -117,6 +127,9 @@ namespace LeituraDeArquivoCSV
             }
         }
 
+        /// <summary>
+        /// Evento de remoção do listBox
+        /// </summary>
         private void btnRemover_Click(object sender, EventArgs e)
         {
             Pessoa pessoa = lboPessoas.SelectedItem as Pessoa;
@@ -126,13 +139,19 @@ namespace LeituraDeArquivoCSV
             limparControles();
         }
 
+        /// <summary>
+        /// Evento de Edição de um item no ListBox
+        /// </summary>
         private void btnEditar_Click(object sender, EventArgs e)
         {
             Pessoa pessoa = (Pessoa)lboPessoas.SelectedItem;
             
+            //Criação e invoção dos campos Telefone e E-mail
             string telefone = txtTelefone.Text, email = txtEmail.Text;
             pessoa.Email = email;
             pessoa.Telefone = telefone;
+
+            //Atualização do ListBox e da Classe BD
             lboPessoas.ClearSelected();
             lboPessoas.Items.Clear();
             lboPessoas.Items.AddRange(BD.updateItem(pessoa));
@@ -140,7 +159,7 @@ namespace LeituraDeArquivoCSV
         }
 
         /// <summary>
-        /// 
+        /// Limpeza da Lista e do BD
         /// </summary>
         private void btnLimpeza_Click(object sender, EventArgs e)
         {
@@ -149,14 +168,22 @@ namespace LeituraDeArquivoCSV
             limparControles();
         }
 
+        /// <summary>
+        /// Evento de Erro para o usuario
+        /// </summary>
         private void btnErro_Click(object sender, EventArgs e)
         {
             tbPrincipal.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Setando meus controles para edição ou remoção
+        /// </summary>
         private void lboPessoas_SelectedValueChanged(object sender, EventArgs e)
         {
+            //Impede que um item nulo venha para edição
             if (lboPessoas.SelectedItem == null) return;
+
             //Bloqueando controles para não modificar
             txtNome.Enabled = false;
             txtSobrenome.Enabled = false;
