@@ -49,6 +49,10 @@ namespace LeituraDeArquivoCSV
             }
             salvarArquivo(logando);
         }
+        /// <summary>
+        /// Salvando o arquivo de log com novas informações
+        /// </summary>
+        /// <param name="txt">Novo log</param>
         protected override void salvarArquivo(string txt)
         {
             if (File.Exists(base.caminho))
